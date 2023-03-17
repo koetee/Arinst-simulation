@@ -55,8 +55,6 @@ namespace TestCOMportEncoder
                 device.ProcessDeviceResponse(new byte[] { encData[i], encData[i + 1] });
             }
 
-
-
         }
     }
 }
