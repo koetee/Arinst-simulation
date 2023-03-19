@@ -5,35 +5,6 @@ namespace TestCOMportEncoder
 {
     class Program
     {
-        public static byte[] GenerateDeviceQuery(string input)
-        {
-            string[] args = input.Split(' ');
-            if (args.Length != 9) {
-                throw new ArgumentException("Invalid input format. Expected 9 space-separated values.");
-            }
-
-            // Parse input arguments
-            string deviceName = args[0];
-            long start = long.Parse(args[1]);
-            long end = long.Parse(args[2]);
-            long step = long.Parse(args[3]);
-            int dwell = int.Parse(args[4]);
-            int gain = int.Parse(args[5]);
-            long ifFreq = long.Parse(args[6]);
-            int attenuation = int.Parse(args[7]);
-            int points = int.Parse(args[8]);
-
-            // Construct message byte array
-            byte[] message = new byte[6];
-            message[0] = (byte)((start >> 24) & 0xFF);
-            message[1] = (byte)((start >> 16) & 0xFF);
-            message[2] = (byte)((start >> 8) & 0xFF);
-            message[3] = (byte)(start & 0xFF);
-            message[4] = (byte)(points & 0xFF);
-            message[5] = (byte)(((dwell & 0x03) << 5) | ((gain & 0x03) << 3) | (attenuation & 0x07));
-
-            return message;
-        }
         static void Main(string[] args)
         {
             DeviceProcessor device = new DeviceProcessor("-1 -1 1800000000 1000000 10700000 0");
