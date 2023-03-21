@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArinstSimulation;
+using System;
 
 
 namespace TestCOMportEncoder
@@ -19,13 +20,11 @@ namespace TestCOMportEncoder
             int elapsedTime = 0;
             string status = "";
 
-            device.normilizeMessage(response, ref index,ref encData, ref elapsedTime, ref status);
+            device.normilizeMessage(response, ref index, ref encData, ref elapsedTime, ref status);
 
-            for (int i = 4; i < encData[3] * 2; i += 2) {
-
+            for (int i = 4; i < encData[3] * 2; i += 2) 
                 device.ProcessDeviceResponse(new byte[] { encData[i], encData[i + 1] });
-            }
-
+            
         }
     }
 }

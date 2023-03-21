@@ -45,7 +45,7 @@ namespace TestCOMportEncoder
         {
             string[] responseParts = response.Replace("\r\n", " ").Split(' ');
             string encodedDataString = "";
-            index = int.Parse(responseParts[2]);
+            index = int.Parse(responseParts[3]);
             status = responseParts[responseParts.Length - 2];
 
             responseParts[responseParts.Length - 2] = "";
@@ -103,8 +103,6 @@ namespace TestCOMportEncoder
                 ProcessMessage(messageBytes);
             }
         }
-       
-        
 
         private void ProcessMessage(byte[] message)
         {
@@ -133,10 +131,11 @@ namespace TestCOMportEncoder
 
 
         }
-
+       
         private void ReceiveStreamData(long frequency, double amplitude, string comm = "")
         {
-            Console.WriteLine("Received data for frequency: " + frequency + " with amplitude: " + amplitude + " " + comm);
+           // if(amplitude > 0)
+                Console.WriteLine("Received data for frequency: " + frequency + " with amplitude: " + amplitude + " " + comm);
         }
     }
 }

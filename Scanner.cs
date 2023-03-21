@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArinstSimulation;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,6 +11,7 @@ namespace TestCOMportEncoder
     {
         private const int BASE_AMPLITUDE_CALCULATION_LEVEL = 80;
         private const double AMPLITUDE_ACCURACY_COEFFICIENT = 10;
+        private const byte TERMINATION_BYTE = 0xFF;
 
         private long _start;
         private long _stop;
@@ -49,37 +51,35 @@ namespace TestCOMportEncoder
             _index = index;
         }
 
+
+        // “\r\nscn20 Start Index\r\n<encoded_data><elapsed_time>\r\ncomplete\r\n”
+
         public string Scan()
         {
             long frequency = _start;
             List<byte> amplitudeData = new List<byte>();
             int totalPoints = (int)Math.Ceiling((_stop - _start) / (double)_step);
-          
-            // Write header bytes
+
+            // Write header bytes <Start, Index>
             amplitudeData.Add((byte)(_index >> 16));
             amplitudeData.Add((byte)((byte)_index));
             amplitudeData.Add((byte)(totalPoints >> 16));
             amplitudeData.Add((byte)(totalPoints));
 
-            for (int i = 0; i < totalPoints; i++) {
-                // Generate a random amplitude value
-                int amplitude = new Random().Next(0, (int)(BASE_AMPLITUDE_CALCULATION_LEVEL * AMPLITUDE_ACCURACY_COEFFICIENT));
 
-                // Encode the amplitude value as a 2-byte sequence
-                // Add the amplitude bytes to the data buffer
-                amplitudeData.AddRange(BitConverter.GetBytes((short)((i << 11) | (amplitude & 0x7FF))));
-                amplitudeData.AddRange(BitConverter.GetBytes((short)((frequency & 0x7FF))));
-                
-                // Update the frequency for the next point
-                frequency += _step;
-            }
+            // <encoded_data>
+            // Encode the amplitude value as a 2-byte sequence
+            // Add the amplitude bytes to the data buffer
+            amplitudeData.AddRange(
+                SignalGenerator.SignalToBytes(
+                    SignalGenerator.Generate(_start / 1000000, _stop / 1000000, 50)));
 
             // Add termination bytes to the amplitude data buffer
-            amplitudeData.Add(0xFF);
-            amplitudeData.Add(0xFF);
+            amplitudeData.Add(TERMINATION_BYTE);
+            amplitudeData.Add(TERMINATION_BYTE);
 
             // Calculate the elapsed time for the scan
-            int elapsedMilliseconds = totalPoints >> 16 * _samples * _timeout;
+            int elapsedMilliseconds = totalPoints >> 8 * _samples * _timeout;
 
             // Build the response string
             StringBuilder responseBuilder = new StringBuilder();
@@ -89,6 +89,13 @@ namespace TestCOMportEncoder
  
             return responseBuilder.ToString();
         }
-      
+
+        private static double NextGaussian(double mean, double stddev)
+        {
+            double u1 = 1.0 - new Random().NextDouble();
+            double u2 = 1.0 - new Random().NextDouble();
+            double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+            return mean + stddev * z;
+        }
     }
 }
