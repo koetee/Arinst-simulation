@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace ArinstSimulation
 {
     public class SignalGenerator

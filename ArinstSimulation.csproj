@@ -9,4 +9,11 @@
     <PackageReference Include="XPlot.Plotly" Version="4.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Scanner.cs">
+      <ExcludeFromSourceAnalysis>False</ExcludeFromSourceAnalysis>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
+  </ItemGroup>
+
 </Project>

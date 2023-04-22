@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Text;
 
-
 namespace TestCOMportEncoder
 {
     public class DeviceProcessor
     {
         private const int BASE_AMPLITUDE_CALCULATION_LEVEL = 80;
         private const int AMPLITUDE_ACCURACY_COEFFICIENT = 10;
+
         private int _lastPointId = -1;
         private int _pointIndex = -1;
-        private long _start = 1800000000;
-        private long _step = 1000000;
-        private int _intermediateFrequency = 10700000;
-        private double _attenuation = 0.0;
+
+        private readonly long _start = 1800000000;
+        private readonly long _step = 1000000;
+        private readonly int _intermediateFrequency = 10700000;
+        private readonly double _attenuation = 0.0;
 
         public DeviceProcessor(string config)
         {
@@ -29,7 +30,6 @@ namespace TestCOMportEncoder
                 !int.TryParse(values[4], out int intermediateFrequency) ||
                 !double.TryParse(values[5], out double attenuation)) {
                 throw new ArgumentException("Invalid Device configuration values.");
-              
             }
 
             _lastPointId = lastPointId;
@@ -102,7 +102,7 @@ namespace TestCOMportEncoder
         {
             int messageLength = message.Length;
 
-            if (messageLength == 6) 
+            if (messageLength == 6)
                 _pointIndex = (message[0] << 24) | (message[1] << 16) | (message[2] << 8) | message[3];
 
             int pointId = (message[messageLength - 2] & 0x000000FF) >> 3;
@@ -113,7 +113,6 @@ namespace TestCOMportEncoder
             double amplitude = (((BASE_AMPLITUDE_CALCULATION_LEVEL * AMPLITUDE_ACCURACY_COEFFICIENT) - amplitudeIntValue) / (double)AMPLITUDE_ACCURACY_COEFFICIENT) - _attenuation;
 
             if (_lastPointId < pointId || pointId == 0) {
-
                 _lastPointId = pointId;
                 _pointIndex++;
             }
