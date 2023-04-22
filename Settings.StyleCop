@@ -1,6 +1,0 @@
-<StyleCopSettings Version="105">
-  <GlobalSettings>
-    <BooleanProperty Name="WriteCache">False</BooleanProperty>
-    <StringProperty Name="Culture">ru-RU</StringProperty>
-  </GlobalSettings>
-</StyleCopSettings>
