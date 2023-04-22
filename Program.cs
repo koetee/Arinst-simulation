@@ -19,7 +19,7 @@ namespace TestCOMportEncoder
 
             for (int j = 0; j < 1; j++) {
                 response = ComPort1.Scan();
-                device.normilizeMessage(response, ref index, ref encData, ref elapsedTime, ref status);
+                device.NormilizeMessage(response, ref index, ref encData, ref elapsedTime, ref status);
 
                 for (int i = 4; i < encData[3] * 2; i += 2)
                     dat.Add(device.ProcessMessage(new byte[] { encData[i], encData[i + 1] }));

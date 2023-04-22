@@ -40,7 +40,7 @@ namespace TestCOMportEncoder
             _attenuation = attenuation;
         }
 
-        public void normilizeMessage(string response, ref int index, ref byte[] encodedData, ref int _elapsedTime, ref string status)
+        public void NormilizeMessage(string response, ref int index, ref byte[] encodedData, ref int _elapsedTime, ref string status)
         {
             string[] responseParts = response.Replace("\r\n", " ").Split(' ');
             string encodedDataString = "";

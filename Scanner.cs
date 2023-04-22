@@ -7,19 +7,18 @@ namespace TestCOMportEncoder
 {
     public class Scanner
     {
-        private const int BASE_AMPLITUDE_CALCULATION_LEVEL = 80;
         private const double AMPLITUDE_ACCURACY_COEFFICIENT = 10;
+        private const int BASE_AMPLITUDE_CALCULATION_LEVEL = 80;
         private const byte TERMINATION_BYTE = 0xFF;
 
-        private long _start;
-        private long _stop;
-        private long _step;
-        private int _timeout;
-        private int _samples;
-        private int _intermediateFrequency;
         private int _formattedAttenuation;
         private int _index;
-
+        private int _intermediateFrequency;
+        private int _samples;
+        private long _start;
+        private long _step;
+        private long _stop;
+        private int _timeout;
         public Scanner(string config)
         {
             string[] values = config.Split(' ');
@@ -36,7 +35,6 @@ namespace TestCOMportEncoder
                 !int.TryParse(values[7], out int formattedAttenuation) ||
                 !int.TryParse(values[8], out int index)) {
                 throw new ArgumentException("Invalid scanner configuration values.");
-                Console.ReadLine();
             }
 
             _start = start;
@@ -51,7 +49,6 @@ namespace TestCOMportEncoder
 
         public string Scan()
         {
-            long frequency = _start;
             List<byte> amplitudeData = new List<byte>();
             int totalPoints = (int)Math.Ceiling((_stop - _start) / (double)_step);
 
