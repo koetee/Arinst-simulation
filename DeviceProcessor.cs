@@ -43,7 +43,7 @@ namespace TestCOMportEncoder
         public void NormilizeMessage(string response, ref int index, ref byte[] encodedData, ref int _elapsedTime, ref string status)
         {
             string[] responseParts = response.Replace("\r\n", " ").Split(' ');
-            string encodedDataString = "";
+            string encodedDataString = string.Empty;
             index = int.Parse(responseParts[3]);
             status = responseParts[responseParts.Length - 2];
 
@@ -54,7 +54,7 @@ namespace TestCOMportEncoder
                 encodedDataString += responseParts[i];
             }
 
-            string input = encodedDataString, numberString = "";
+            string input = encodedDataString, numberString = string.Empty;
 
             int iter = input.Length - 1;
 
