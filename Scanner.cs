@@ -71,7 +71,7 @@ namespace TestCOMportEncoder
             amplitudeData.Add(TERMINATION_BYTE);
 
             // Calculate the elapsed time for the scan
-            int elapsedMilliseconds = totalPoints >> 16 * _samples * _timeout;
+            int elapsedMilliseconds = totalPoints >> (16 * _samples * _timeout);
 
             // Build the response string
             StringBuilder responseBuilder = new StringBuilder();
