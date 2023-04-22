@@ -29,7 +29,7 @@ namespace TestCOMportEncoder
                 !int.TryParse(values[4], out int intermediateFrequency) ||
                 !double.TryParse(values[5], out double attenuation)) {
                 throw new ArgumentException("Invalid Device configuration values.");
-                Console.ReadLine();
+              
             }
 
             _lastPointId = lastPointId;
@@ -54,8 +54,7 @@ namespace TestCOMportEncoder
                 encodedDataString += responseParts[i];
             }
 
-            string input = encodedDataString,
-                   numberString = "";
+            string input = encodedDataString, numberString = "";
 
             int iter = input.Length - 1;
 
@@ -102,18 +101,16 @@ namespace TestCOMportEncoder
         public double ProcessMessage(byte[] message)
         {
             int messageLength = message.Length;
-            if (messageLength == 6) {
+
+            if (messageLength == 6) 
                 _pointIndex = (message[0] << 24) | (message[1] << 16) | (message[2] << 8) | message[3];
-            }
 
             int pointId = (message[messageLength - 2] & 0x000000FF) >> 3;
             int amplitudeIntValue = ((message[messageLength - 2] & 0x00000007) << 8) | (message[messageLength - 1] & 0x000000FF);
 
-
             long frequency = _start + (_pointIndex * _step) + ((_intermediateFrequency * 2) * _pointIndex);
 
             double amplitude = (((BASE_AMPLITUDE_CALCULATION_LEVEL * AMPLITUDE_ACCURACY_COEFFICIENT) - amplitudeIntValue) / (double)AMPLITUDE_ACCURACY_COEFFICIENT) - _attenuation;
-            // amplitudeIntValue = 18600 => amplitude = ((80 * 10.0 - 18659)) / 10.0 = -108.59 dB
 
             if (_lastPointId < pointId || pointId == 0) {
 
@@ -123,7 +120,6 @@ namespace TestCOMportEncoder
             ReceiveStreamData(frequency, amplitude, $"\tbytes[] = {message[0]} {message[1]}");
 
             return amplitude;
-
         }
 
         private void ReceiveStreamData(long frequency, double amplitude, string comm = "")
