@@ -7,7 +7,6 @@ namespace ArinstSimulation
     {
         private const double AMPLITUDE_FACTOR = 1.4142135623730951; // sqrt(2)
         private const double PHASE_FACTOR = 2 * Math.PI / TimeSpan.TicksPerSecond;
-        private const double MAX_RAND = 32767.0;
         private const double RANDOMFACTOR = 1.0 / (2.0 * int.MaxValue);
 
         private static long seed = DateTime.Now.Ticks;
@@ -17,9 +16,9 @@ namespace ArinstSimulation
             double amplitude = AMPLITUDE_FACTOR * Math.Sqrt(frequency);
             double phase = seed * frequency * PHASE_FACTOR;
 
-            seed = (seed * 1103515245L + 12345L) % 0x100000000L;
+            seed = ((seed * 1103515245L) + 12345L) % 0x100000000L;
 
-            double signal = amplitude * Math.Sin(phase) + (seed * RANDOMFACTOR) - 0.5;
+            double signal = (amplitude * Math.Sin(phase)) + (seed * RANDOMFACTOR) - 0.5;
 
             return signal;
         }
@@ -30,7 +29,7 @@ namespace ArinstSimulation
             double[] signal = new double[sampleCount];
 
             for (int i = 0; i < sampleCount; i++) {
-                double frequency = frequencyStart + i * deltaFrequency;
+                double frequency = frequencyStart + (i * deltaFrequency);
                 signal[i] = Generate(frequency);
             }
 

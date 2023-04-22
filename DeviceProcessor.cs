@@ -104,7 +104,7 @@ namespace TestCOMportEncoder
             }
         }
 
-        private void ProcessMessage(byte[] message)
+        public double ProcessMessage(byte[] message)
         {
             int messageLength = message.Length;
             if (messageLength == 6) {
@@ -128,7 +128,8 @@ namespace TestCOMportEncoder
                 _pointIndex++;
             }
             ReceiveStreamData(frequency, amplitude, $"\tbytes[] = {message[0]} {message[1]}") ;
-
+           
+            return amplitude;
 
         }
        

@@ -51,9 +51,6 @@ namespace TestCOMportEncoder
             _index = index;
         }
 
-
-        // “\r\nscn20 Start Index\r\n<encoded_data><elapsed_time>\r\ncomplete\r\n”
-
         public string Scan()
         {
             long frequency = _start;
@@ -62,10 +59,9 @@ namespace TestCOMportEncoder
 
             // Write header bytes <Start, Index>
             amplitudeData.Add((byte)(_index >> 16));
-            amplitudeData.Add((byte)((byte)_index));
+            amplitudeData.Add((byte)_index);
             amplitudeData.Add((byte)(totalPoints >> 16));
             amplitudeData.Add((byte)(totalPoints));
-
 
             // <encoded_data>
             // Encode the amplitude value as a 2-byte sequence
@@ -79,7 +75,7 @@ namespace TestCOMportEncoder
             amplitudeData.Add(TERMINATION_BYTE);
 
             // Calculate the elapsed time for the scan
-            int elapsedMilliseconds = totalPoints >> 8 * _samples * _timeout;
+            int elapsedMilliseconds = totalPoints >> 16 * _samples * _timeout;
 
             // Build the response string
             StringBuilder responseBuilder = new StringBuilder();
@@ -94,8 +90,8 @@ namespace TestCOMportEncoder
         {
             double u1 = 1.0 - new Random().NextDouble();
             double u2 = 1.0 - new Random().NextDouble();
-            double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
-            return mean + stddev * z;
+            double z = (Math.Sqrt(-2.0 * Math.Log(u1))) * Math.Sin(2.0 * Math.PI * u2);
+            return mean + (stddev * z);
         }
     }
 }
