@@ -8,7 +8,6 @@ namespace TestCOMportEncoder
     {
         private const int BASE_AMPLITUDE_CALCULATION_LEVEL = 80;
         private const int AMPLITUDE_ACCURACY_COEFFICIENT = 10;
-
         private int _lastPointId = -1;
         private int _pointIndex = -1;
         private long _start = 1800000000;
@@ -64,7 +63,6 @@ namespace TestCOMportEncoder
                 iter--;
             }
 
-
             while (iter >= 0 && char.IsDigit(input[iter])) {
                 numberString = input[iter] + numberString;
                 iter--;
@@ -73,7 +71,6 @@ namespace TestCOMportEncoder
             string encodedDataWithoutNumber = input.Substring(0, iter + 1);
 
             encodedData = Encoding.UTF8.GetBytes(encodedDataWithoutNumber);
-
 
             Console.WriteLine($"Index: \t\t{index}");
             Console.WriteLine($"Encoded data: \t{string.Join(", ", encodedData)}" + encodedData.Length);
@@ -87,8 +84,6 @@ namespace TestCOMportEncoder
             }
 
             Console.WriteLine($"Status: \t{status}");
-
-
         }
 
         public void ProcessDeviceResponse(byte[] message)
@@ -110,8 +105,6 @@ namespace TestCOMportEncoder
             if (messageLength == 6) {
                 _pointIndex = (message[0] << 24) | (message[1] << 16) | (message[2] << 8) | message[3];
             }
-
-
 
             int pointId = (message[messageLength - 2] & 0x000000FF) >> 3;
             int amplitudeIntValue = ((message[messageLength - 2] & 0x00000007) << 8) | (message[messageLength - 1] & 0x000000FF);
