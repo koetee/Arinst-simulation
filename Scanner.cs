@@ -19,6 +19,7 @@ namespace TestCOMportEncoder
         private long _step;
         private long _stop;
         private int _timeout;
+
         public Scanner(string config)
         {
             string[] values = config.Split(' ');
