@@ -1,9 +1,4 @@
-﻿using ArinstSimulation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using XPlot.Plotly;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 namespace TestCOMportEncoder
 {
     class Program
@@ -23,8 +18,8 @@ namespace TestCOMportEncoder
             string status = "";
 
 
-          
-            
+
+
 
 
 

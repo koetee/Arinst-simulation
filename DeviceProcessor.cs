@@ -32,7 +32,7 @@ namespace TestCOMportEncoder
                 throw new ArgumentException("Invalid Device configuration values.");
                 Console.ReadLine();
             }
-            
+
             _lastPointId = lastPointId;
             _pointIndex = pointIndex;
             _start = start;
@@ -112,31 +112,31 @@ namespace TestCOMportEncoder
             }
 
 
-            
+
             int pointId = (message[messageLength - 2] & 0x000000FF) >> 3;
             int amplitudeIntValue = ((message[messageLength - 2] & 0x00000007) << 8) | (message[messageLength - 1] & 0x000000FF);
-          
+
 
             long frequency = _start + (_pointIndex * _step) + ((_intermediateFrequency * 2) * _pointIndex);
 
             double amplitude = (((BASE_AMPLITUDE_CALCULATION_LEVEL * AMPLITUDE_ACCURACY_COEFFICIENT) - amplitudeIntValue) / (double)AMPLITUDE_ACCURACY_COEFFICIENT) - _attenuation;
             // amplitudeIntValue = 18600 => amplitude = ((80 * 10.0 - 18659)) / 10.0 = -108.59 dB
-   
+
             if (_lastPointId < pointId || pointId == 0) {
-                
+
                 _lastPointId = pointId;
                 _pointIndex++;
             }
-            ReceiveStreamData(frequency, amplitude, $"\tbytes[] = {message[0]} {message[1]}") ;
-           
+            ReceiveStreamData(frequency, amplitude, $"\tbytes[] = {message[0]} {message[1]}");
+
             return amplitude;
 
         }
-       
+
         private void ReceiveStreamData(long frequency, double amplitude, string comm = "")
         {
-           // if(amplitude > 0)
-                Console.WriteLine("Received data for frequency: " + frequency + " with amplitude: " + amplitude + " " + comm);
+            // if(amplitude > 0)
+            Console.WriteLine("Received data for frequency: " + frequency + " with amplitude: " + amplitude + " " + comm);
         }
     }
 }

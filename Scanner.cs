@@ -1,7 +1,6 @@
 ﻿using ArinstSimulation;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Text;
 
 
@@ -82,7 +81,7 @@ namespace TestCOMportEncoder
             responseBuilder.AppendFormat("\r\nscn20 {0} {1}\r\n", _start, _index);
             responseBuilder.Append(Encoding.UTF8.GetString(amplitudeData.ToArray()));
             responseBuilder.AppendFormat("{0}\r\ncomplete\r\n", elapsedMilliseconds);
- 
+
             return responseBuilder.ToString();
         }
 
