@@ -54,3 +54,6 @@ double amplitude = (((BASE_AMPLITUDE_CALCULATION_LEVEL * AMPLITUDE_ACCURACY_COEF
 
 - Проект использует синтетическую генерацию сигнала для симуляции данных устройства.
 - Расчеты частоты и амплитуды основаны на предопределенных константах и могут потребовать настройки для конкретных применений.
+
+## Источники
+[Документация](https://github.com/koetee/Arinst-simulation/blob/master/Arinst%20protocol.pdf)
